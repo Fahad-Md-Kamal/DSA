@@ -97,8 +97,8 @@ for i in range(total_num):
     for j in range(1, i+1):
         print(j, end= "")
     
-    for s in range(i-1,-1):
-        print(s, end= "")
+    for s in range(i):
+        print(i-s+1, end= "")
         
     # for k in range(1, i):
     #     print(total_num-i-k, end= " ")
