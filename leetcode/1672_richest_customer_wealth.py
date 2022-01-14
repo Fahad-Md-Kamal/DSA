@@ -23,6 +23,19 @@ def maximumWealth(accounts: list) -> int:
 print(maximumWealth([[1,2,3],[3,2,1]]))
 
 
+############################# Other solutions  ##################################
+
+# def maximumWealth(accounts: list) -> int:
+# 	maxWealth = 0
+# 	for i in range(len(accounts)):
+# 		totalWealth = sum(accounts[i]) # sum of all values of the list
+# 		maxWealth = max(maxWealth, totalWealth) # max of two values
+# 	return maxWealth
+
+# def maximumWealth(accounts: list) -> int:
+#     return max(sum(i) for i in accounts)
+
+
 # TODO: NEXT CHALLENGES
     # Minimum Number of Refueling Stops
     # Triples with Bitwise AND Equal To Zero
