@@ -58,18 +58,83 @@ class LinkedList:
         new_node = Node(data)
         new_node.next = prev_node.next
         prev_node.next = new_node
+    
+    def delete_node(self, key):
+        current_node = self.head
+        if current_node and current_node.data == key:
+            self.head = current_node.next
+            current_node == None
+            return
+
+        prev = None
+        while current_node and current_node.data != key:
+            prev = current_node
+            current_node = current_node.next
+
+        if not current_node:
+            return
+
+        prev.next = current_node.next
+
+    
+    def delete_at_position(self, position):
+        current_node = self.head
+        if position == 0:
+            self.head = current_node.next
+            current_node == None
+            return
+
+        prev = None
+        count = 0
+        while current_node and count != position:
+            prev = current_node
+            current_node = current_node.next
+            count += 1
+
+        if not current_node:
+            return
+
+        prev.next = current_node.next
+        current_node = None
+    
+    def len_iterative(self):
+        count = 0
+        current_node = self.head
+        while current_node:
+            current_node = current_node.next
+            count += 1
+        print(count)
+    
+    def len_recursive(self, node):
+        if not node:
+            return 0
+        return 1 + self.len_recursive(node.next)
+    
+    def len_recursive_alt(self, node):
+        return 0 if not node else 1 + self.len_recursive(node.next)
+
+
+
+
 
 if __name__ == '__main__':
     llist = LinkedList()
 
+    llist.prepend('A')
     llist.append('B')
     llist.append('C')
     llist.append('D')
+    llist.append('E')
+    llist.append('F')
     # llist.print_list()
 
-    llist.prepend('A')
     # llist.print_list()
-    llist.insert_after_data('A', 'K')
+    # llist.insert_after_data('A', 'K')
+    # # llist.print_list()
+    # llist.insert_after_node(llist.head.next, 'Z')
     # llist.print_list()
-    llist.insert_after_node(llist.head.next, 'Z')
-    llist.print_list()
+    # llist.delete_node('B')
+    # llist.delete_at_position(2)
+    # llist.print_list()
+    # llist.len_iterative()
+    print(llist.len_recursive(llist.head))
