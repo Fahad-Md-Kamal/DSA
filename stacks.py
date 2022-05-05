@@ -31,4 +31,6 @@ def reverse_string(stack, input_str):
 
 stack = Stack()
 
-print(reverse_string(stack, 'Hellow'))
+
+if __name__== "__main__":
+    print(reverse_string(stack, 'Hellow'))
