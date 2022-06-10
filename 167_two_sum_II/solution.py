@@ -14,31 +14,21 @@ def two_sum(numbers: List[int], target: int) -> List[int]:
             left += 1
     return [-1, -1]
 
+
 class TestSolution(unittest.TestCase):
 
     def test_case_1(self):
         nums = [2,7,11,15]
         self.assertEqual(two_sum(nums, 9), [1, 2])
 
-    # def test_case_2(self):
-    #     nums = [0, 0, 3,10]
-    #     moveZeroes(nums)
-    #     self.assertEqual(nums, [3, 10, 0, 0])
+    def test_case_2(self):
+        nums = [2,3,4]
+        self.assertEqual(two_sum(nums, 6), [1, 3])
 
-    # def test_case_3(self):
-    #     nums = [0, 0]
-    #     moveZeroes(nums)
-    #     self.assertEqual(nums, [ 0, 0])
-    
-    # def test_case_4(self):
-    #     nums = []
-    #     moveZeroes(nums)
-    #     self.assertEqual(nums, [])
-    
-    # def test_case_5(self):
-    #     nums = [50, 8, 2, 0, 33, 00, 30, 20 ,4]
-    #     moveZeroes(nums)
-    #     self.assertEqual(nums, [50, 8, 2, 33, 30, 20, 4, 0, 00 ])
+    def test_case_3(self):
+        nums = [-1,0]
+        self.assertEqual(two_sum(nums, -1), [1, 2])
+
 
 if __name__ == '__main__':
     print(".....")
