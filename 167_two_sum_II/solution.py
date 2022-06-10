@@ -1,27 +1,24 @@
 import unittest
 from typing import List
 
-def twoSum(nums: List[int], target: int) -> List[int]:
-    left = 0
-    right = len(nums) -1
+def two_sum(numbers: List[int], target: int) -> List[int]:
+    left , right = 0, len(numbers) -1
 
-    while left <=right:
-
-        if nums[left] == 0:
-            popped_item = nums.pop(left)
-            nums.append(popped_item)
+    while left <= right:
+        sum_of_two = numbers[left] + numbers[right]
+        if sum_of_two == target:
+            return [left+1, right+1]
+        elif sum_of_two > target:
             right -= 1
         else:
             left += 1
-
+    return [-1, -1]
 
 class TestSolution(unittest.TestCase):
-    pass
 
-    # def test_case_1(self):
-    #     nums = [0,-1,0,3,10]
-    #     moveZeroes(nums)
-    #     self.assertEqual(nums, [-1, 3, 10, 0, 0])
+    def test_case_1(self):
+        nums = [2,7,11,15]
+        self.assertEqual(two_sum(nums, 9), [1, 2])
 
     # def test_case_2(self):
     #     nums = [0, 0, 3,10]
@@ -44,4 +41,5 @@ class TestSolution(unittest.TestCase):
     #     self.assertEqual(nums, [50, 8, 2, 33, 30, 20, 4, 0, 00 ])
 
 if __name__ == '__main__':
-  unittest.main()
+    print(".....")
+    unittest.main()
