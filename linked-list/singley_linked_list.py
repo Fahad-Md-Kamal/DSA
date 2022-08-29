@@ -177,6 +177,55 @@ class LinkedList():
             idx += 1
             current_node = current_node.next
 
+    def search_element_by_value(self, node_value):
+        """
+        Search Node by Index
+
+        Args:
+            node_index (_type_):
+        """
+        if not self.head: return
+
+        if node_value == self.head.value:
+            return 0
+
+        idx = 0
+        current_node = self.head
+        while current_node.next:
+            if current_node.value == node_value:
+                return idx
+            idx += 1
+            current_node = current_node.next
+
+        if current_node.value == node_value:
+            return idx
+        
+        return -1
+
+    def search_element_index(self, node_index):
+        """
+        Search Node by Index
+
+        Args:
+            node_index (_type_):
+        """
+        if not self.head: return
+
+        if node_index == 0:
+            return self.head.value
+
+        idx = 0
+        current_node = self.head
+        while current_node.next:
+            if idx == node_index:
+                return current_node.value
+            idx += 1
+            current_node = current_node.next
+
+
+        
+        return -1
+
         
 if __name__=="__main__":
     ll = LinkedList()
@@ -184,26 +233,34 @@ if __name__=="__main__":
     ll.insert_first(4)
     ll.insert_first(5)
     ll.insert_first(6)
-    ll.display('INSERT FIRST')
+    # ll.display('INSERT FIRST')
 
     ll.insert_last(44)
     ll.insert_first(88)
-    ll.display('INSERT LAST 44')
+    # ll.display('INSERT LAST 44')
 
     ll.insert_at(2, 99)
-    ll.display('INSERT AT 2nd pos')
+    # ll.display('INSERT AT 2nd pos')
 
     ll.insert_after(old_node=99,new_val=77)
-    ll.display('INSERT AFTER 99')
+    # ll.display('INSERT AFTER 99')
 
     ll.insert_before(4, 2)
-    ll.display('INSERT BEFORE 4')
+    # ll.display('INSERT BEFORE 4')
 
     ll.delete_by_val(88)
-    ll.display('DELETE BY VAL 88')
+    # ll.display('DELETE BY VAL 88')
 
     ll.delete_by_val(44)
-    ll.display('DELETE BY VAL 44')
+    # ll.display('DELETE BY VAL 44')
 
     ll.delete_by_index(0)
-    ll.display('DELETE BY INDEX 0')
+    # ll.display('DELETE BY INDEX 0')
+
+    ll.display()
+
+    node = ll.search_element_by_value(77)
+    print(node)
+
+    node = ll.search_element_index(2)
+    print(node)
