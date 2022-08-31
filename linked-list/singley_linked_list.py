@@ -97,7 +97,7 @@ class LinkedList:
         current_node = self.head
         while current_node and current_node.next:
             if current_node.next.data == data:
-                return current_node.data
+                return current_node
             current_node = current_node.next
         return None
 
@@ -107,7 +107,7 @@ class LinkedList:
         current_node = self.head
         while current_node and current_node.next:
             if current_node.data == data:
-                return current_node.next.data
+                return current_node.next
             current_node = current_node.next
         return
 
@@ -203,7 +203,8 @@ class TestSingleyLL(unittest.TestCase):
     
     def test_previous_node_of_data(self):
         self.ll.append_list_from_array([9, 12])
-        self.assertEqual(self.ll.previous_node_of_val(12), 9)
+        node = self.ll.previous_node_of_val(12)
+        self.assertEqual(node.data, 9)
 
     def test_previous_node_of_data_empty(self):
         self.assertEqual(self.ll.previous_node_of_val(1), None)
@@ -214,7 +215,8 @@ class TestSingleyLL(unittest.TestCase):
     
     def test_next_node_of_val(self):
         self.ll.append_list_from_array([33, 66])
-        self.assertEqual(self.ll.next_node_of_val(33), 66)
+        node = self.ll.next_node_of_val(33)
+        self.assertEqual(node.data, 66)
     
     def test_next_node_of_val_not_in_list(self):
         self.ll.append_list_from_array([33, 66])
