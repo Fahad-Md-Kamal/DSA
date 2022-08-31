@@ -1,3 +1,6 @@
+import unittest
+
+
 class Node():
 
     def __init__(self, value, next=None):
@@ -13,7 +16,7 @@ class LinkedList():
         self.head = None
         self.count = 0
     
-    def insert_first(self, val):
+    def prepend_ll(self, val):
         """
         Insert Items to first of the linked list
 
@@ -28,7 +31,7 @@ class LinkedList():
             self.head = node
         self.count +=1
     
-    def display(self, statement=''):
+    def display(self, statement=None):
         """
         DISPLAY Linked List
 
@@ -40,10 +43,27 @@ class LinkedList():
         while current_node:
             node_list.append(str(current_node.value))
             current_node = current_node.next
-        node_list.append(f'{statement}')
-        print(' -> '.join(node_list))
+        if statement: node_list.append(f'{statement}')
+        return ' -> '.join(node_list)
     
-    def insert_last(self, value):
+    def __display_helper(self, node, _list=[]):
+        if node is None:
+            return
+        _list.append(str(node.value))
+        self.__display_helper(node.next, _list)
+        return(_list)
+    
+    def display_iter(self, statement=''):
+        """
+        DISPLAY Linked List RECURSIVE
+        """
+        res = self.__display_helper(self.head)
+        if statement:
+            res.append(statement)
+        return ' -> '.join(res)
+
+    
+    def append_ll(self, value):
         """
         Insert Node to the last of the linked list
         Args:
@@ -66,9 +86,13 @@ class LinkedList():
         """
         node = Node(value)
         if not self.head: return
+        if index_point == 0:
+            node.next = self.head
+            self.head = node
+            return
         idx = 0
         current_node = self.head
-        while current_node.next:
+        while current_node:
             if index_point - 1 == idx:
                 node.next = current_node.next
                 current_node.next = node
@@ -85,8 +109,9 @@ class LinkedList():
         """
         new_node = Node(new_val)
         if not self.head: return
+
         current_node = self.head
-        while current_node.next:
+        while current_node:
             if current_node.value == old_node:
                 new_node.next = current_node.next
                 current_node.next = new_node
@@ -210,10 +235,8 @@ class LinkedList():
             node_index (_type_):
         """
         if not self.head: return
-
         if node_index == 0:
             return self.head.value
-
         idx = 0
         current_node = self.head
         while current_node.next:
@@ -221,46 +244,91 @@ class LinkedList():
                 return current_node.value
             idx += 1
             current_node = current_node.next
-
-
-        
         return -1
+
+    def delete_list(self):
+        self.head = None
+    
+    def list_length(self):
+        if not self.head: return 0
+        count = 0
+        current = self.head
+        while current:
+            count +=1
+            current = current.next
+        return count
+
+class TestSingleyLL(unittest.TestCase):
+
+    def setUp(self) -> None:
+        self.ll = LinkedList()
+        self.ll.prepend_ll(3)
+        self.ll.prepend_ll(4)
+        return super().setUp()
+    
+    def test_display_func(self):
+        self.assertEqual(self.ll.display(), '4 -> 3')
+
+    def test_display_iter_func(self):
+        self.assertEqual(self.ll.display_iter(), '4 -> 3')
+
+    def test_list_insert_first(self):
+        self.ll.prepend_ll(6)
+        self.assertEqual(self.ll.display(), '6 -> 4 -> 3')
+
+    def test_list_insert_last(self):
+        self.ll.append_ll(55)
+        self.ll.append_ll(66)
+        self.assertEqual(self.ll.display(), '4 -> 3 -> 55 -> 66')
+
+    def test_list_insert_after(self):
+        self.ll.insert_after(3, 27)
+        self.assertEqual(self.ll.display(), '4 -> 3 -> 27')
+
+    def test_list_insert_at(self):
+        self.ll.insert_at(1, 27)
+        print(self.ll.display())
+        self.assertEqual(self.ll.display(), '4 -> 27 -> 3')
 
         
 if __name__=="__main__":
-    ll = LinkedList()
-    ll.insert_first(3)
-    ll.insert_first(4)
-    ll.insert_first(5)
-    ll.insert_first(6)
+    unittest.main()
+
     # ll.display('INSERT FIRST')
 
-    ll.insert_last(44)
-    ll.insert_first(88)
-    # ll.display('INSERT LAST 44')
+    # ll.insert_last(44)
+    # ll.insert_first(88)
+    # # ll.display('INSERT LAST 44')
 
-    ll.insert_at(2, 99)
-    # ll.display('INSERT AT 2nd pos')
+    # ll.insert_at(2, 99)
+    # # ll.display('INSERT AT 2nd pos')
 
-    ll.insert_after(old_node=99,new_val=77)
-    # ll.display('INSERT AFTER 99')
+    # ll.insert_after(old_node=99,new_val=77)
+    # # ll.display('INSERT AFTER 99')
 
-    ll.insert_before(4, 2)
-    # ll.display('INSERT BEFORE 4')
+    # ll.insert_before(4, 2)
+    # # ll.display('INSERT BEFORE 4')
 
-    ll.delete_by_val(88)
-    # ll.display('DELETE BY VAL 88')
+    # ll.delete_by_val(88)
+    # # ll.display('DELETE BY VAL 88')
 
-    ll.delete_by_val(44)
-    # ll.display('DELETE BY VAL 44')
+    # ll.delete_by_val(44)
+    # # ll.display('DELETE BY VAL 44')
 
-    ll.delete_by_index(0)
-    # ll.display('DELETE BY INDEX 0')
+    # ll.delete_by_index(0)
+    # # ll.display('DELETE BY INDEX 0')
 
-    ll.display()
+    # # ll.display()
+    # ll.display_iter("RECURSIVE")
 
-    node = ll.search_element_by_value(77)
-    print(node)
+    # node = ll.search_element_by_value(77)
+    # print(node)
 
-    node = ll.search_element_index(2)
-    print(node)
+    # node = ll.search_element_index(2)
+    # print(node)
+
+    # lenght = ll.list_length()
+    # # ll.display(f'List Lenght {lenght}')
+
+    # # node = ll.delete_list()
+    # # ll.display()
