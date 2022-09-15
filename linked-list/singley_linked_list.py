@@ -78,6 +78,17 @@ class LinkedList:
             current = current.next
             count += 1
         return None
+    
+    # Current Node by Index
+    def current_index_node(self, index):
+        if not self.head: return
+        count = 0
+        current = self.head
+        while current:
+            if count == index:
+                return current
+            current = current.next
+            count += 1
 
     # After Node by index
     def next_index_node(self, index):
@@ -90,10 +101,17 @@ class LinkedList:
             current_node = current_node.next
             count +=1
         return None
+    
+    def current_node_by_val(self, value):
+        if not self.head: return
+        current = self.head
+        while current:
+            if current.data == value: return current
+            current = current.next
 
     # Previous Node by val
     def previous_node_of_val(self, data):
-        if not self.head: return
+        if not self.head: return 
         current_node = self.head
         while current_node and current_node.next:
             if current_node.next.data == data:
@@ -122,10 +140,41 @@ class LinkedList:
             prev_node.next = new_node
 
     # Insert before index
+    def insert_before_index(self, index, data):
+        previous_node = self.previous_index_node(index=index)
+        if previous_node:
+            new_node = Node(data)
+            new_node.next = previous_node.next
+            previous_node.next = new_node
+
     # Insert After index
+    def insert_after_index(self, index, data):
+        current_node = self.current_index_node(index)
+        if current_node:
+            node = Node(data)
+            node.next = current_node.next
+            current_node.next = node
 
     # Insert before value
+    def insert_before_value(self, value, data):
+        if not self.head: return
+        node = Node(data)
+        if self.head.data == value:
+            node.next = self.head
+            self.head = node
+            return
+            
+        previous_node = self.previous_node_of_val(value)
+        node.next = previous_node.next
+        previous_node.next = node
+
     # Insert After value
+    def insert_after_value(self, value, data):
+        current_node = self.current_node_by_val(value)
+        if current_node:
+            node = Node(data)
+            node.next = current_node.next
+            current_node.next = node
 
     # Remove at index
     # Remove before index
@@ -167,6 +216,16 @@ class TestSingleyLL(unittest.TestCase):
     def test_create_list_from_data_empty_list(self):
         self.ll.append_list_from_array([])
         self.assertEqual(self.ll.display(), [])
+    
+    def test_current_index_node(self):
+        self.ll.append_list_from_array([9,12,15])
+        node = self.ll.current_index_node(2)
+        self.assertEqual(node.data, 15)
+    
+    def test_current_index_node_empty(self):
+        self.ll.append_list_from_array([])
+        node = self.ll.current_index_node(2)
+        self.assertEqual(node, None)
     
     def test_previous_index_node(self):
         self.ll.append_list_from_array([9,12,15])
@@ -238,6 +297,46 @@ class TestSingleyLL(unittest.TestCase):
     def test_insert_at_index_last_index(self):
         self.ll.append_list_from_array([1,2,3,4])
         self.ll.insert_at_index(index=5, data=44)
+        self.assertEqual(self.ll.display(), '1 -> 2 -> 3 -> 4')
+    
+    def test_insert_before_index(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_before_index(index=2, data=44)
+        self.assertEqual(self.ll.display(), '1 -> 2 -> 44 -> 3 -> 4')
+    
+    def test_insert_before_index_empty_list(self):
+        self.ll.append_list_from_array([])
+        self.ll.insert_before_index(index=2, data=44)
+        self.assertEqual(self.ll.display(), [])
+    
+    def test_insert_after_index(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_after_index(index=2, data=44)
+        self.assertEqual(self.ll.display(), '1 -> 2 -> 3 -> 44 -> 4')
+    
+    def test_insert_before_node_value(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_before_value(value=4, data=33)
+        self.assertEqual(self.ll.display(), '1 -> 2 -> 3 -> 33 -> 4')
+    
+    def test_insert_before_node_value_start_value(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_before_value(value=1, data=33)
+        self.assertEqual(self.ll.display(), '33 -> 1 -> 2 -> 3 -> 4')
+    
+    def test_insert_after_value(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_after_value(value=3, data=33)
+        self.assertEqual(self.ll.display(), '1 -> 2 -> 3 -> 33 -> 4')
+    
+    def test_insert_after_value_last_value(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_after_value(value=4, data=33)
+        self.assertEqual(self.ll.display(), '1 -> 2 -> 3 -> 4 -> 33')
+    
+    def test_insert_after_value_none_value(self):
+        self.ll.append_list_from_array([1,2,3,4])
+        self.ll.insert_after_value(value=33, data=3)
         self.assertEqual(self.ll.display(), '1 -> 2 -> 3 -> 4')
     
 
