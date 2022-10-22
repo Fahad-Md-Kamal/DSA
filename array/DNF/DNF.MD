@@ -12,6 +12,7 @@ flowchart TD
 START((START)) ---> A[\Array\]
 A ---> B[delcare P1, P2 & Mid]
 B ---> C{Is Mid <= P2}
+L1((L1)) ---> C
 C --No--> STOP(((STOP)))
 
 C --> D{Is Mid == Pivot}
@@ -21,6 +22,6 @@ F ---Yes---> G[SWAP MID and P1, Increase P1]
 F ---No---> H[SWAP MID and P2, Decrease p2]
 G --> E
 H --> E
-E --> C
+E ---> L11((L1))
 
 ```
