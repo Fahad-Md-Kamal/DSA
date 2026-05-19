@@ -5,13 +5,32 @@ jobs:
     name: Install requirements and execute tests
     runs-on: ubuntu-latest
     steps:
-      - name: update
-        run: sudo apt update
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Install python3
-        run: sudo apt install python3-pip
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
       - name: Run test
-        # run: python3 linked-list/singley_linked_list.py
-        run: python3 run.py
+        run: |
+          set -euo pipefail
+          echo "Executing run.py"
+          python -u run.py 2>&1 | tee run.py.log
+      - name: Add test summary to job summary
+        if: always()
+        run: |
+          echo "## run.py Test Summary" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f run.py.log ]; then
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+            tail -n 12 run.py.log >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "No run.py.log found" >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Upload run.py log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: run-py-log
+          path: run.py.log
         
