@@ -44,8 +44,18 @@ class Solution:
 if __name__ == "__main__":
     solution = Solution()
 
-    nums = [1, 2, 3, 3]
-    print(solution.hasDuplicate(nums))  # Output: true
+    test_cases = [
+        ([1, 2, 3, 3], True),
+        ([1, 2, 3, 4], False),
+        ([], False),
+        ([-1, -2, -3, -1], True),
+        ([10], False),
+    ]
 
-    nums = [1, 2, 3, 4]
-    print(solution.hasDuplicate(nums))  # Output: false
+    for idx, (nums, expected) in enumerate(test_cases, start=1):
+        result = solution.hasDuplicate(nums)
+        assert result == expected, (
+            f"Test {idx} failed: nums={nums}, expected={expected}, got={result}"
+        )
+
+    print(f"All tests passed: {len(test_cases)}")

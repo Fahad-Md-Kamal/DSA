@@ -49,11 +49,19 @@ class Solution:
 if __name__ == "__main__":
     solution = Solution()
 
-    s = "racecar"
-    t = "carrace"
-    print(solution.isAnagram(s, t))  # Output: true
-    
-    s = "jar"
-    t = "jam"
-    print(solution.isAnagram(s, t))  # Output: false
+    test_cases = [
+        ("racecar", "carrace", True),
+        ("jar", "jam", False),
+        ("anagram", "nagaram", True),
+        ("rat", "car", False),
+        ("aacc", "ccac", False),
+    ]
+
+    for idx, (s, t, expected) in enumerate(test_cases, start=1):
+        result = solution.isAnagram(s, t)
+        assert result == expected, (
+            f"Test {idx} failed: s={s}, t={t}, expected={expected}, got={result}"
+        )
+
+    print(f"All tests passed: {len(test_cases)}")
         
